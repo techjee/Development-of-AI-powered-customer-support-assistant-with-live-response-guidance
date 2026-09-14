@@ -369,18 +369,20 @@ class HuggingFaceNLP:
     def _get_sentiment_pipeline(self):
         from transformers import pipeline as build_pipeline
         if self._sentiment_pipeline is None:
+            # Multilingual sentiment model that supports English, Hindi, and Tamil.
             self._sentiment_pipeline = build_pipeline(
                 "sentiment-analysis",
-                model="distilbert-base-uncased-finetuned-sentiment",
+                model="cardiffnlp/twitter-xlm-roberta-base-sentiment",
             )
         return self._sentiment_pipeline
 
     def _get_intent_pipeline(self):
         from transformers import pipeline as build_pipeline
         if self._intent_pipeline is None:
+            # Multilingual NLI-based zero-shot classification for intent detection across languages.
             self._intent_pipeline = build_pipeline(
                 "zero-shot-classification",
-                model="facebook/bart-large-mnli",
+                model="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
             )
         return self._intent_pipeline
 
@@ -436,6 +438,7 @@ class HuggingFaceNLP:
             "sentiment": sentiment,
             "sentiment_score": sentiment_score,
             "customer_intent": intent,
+            "analysis_source": "fallback",
         }
 
     def analyze(self, text: str) -> dict:
@@ -463,6 +466,7 @@ class HuggingFaceNLP:
                 "sentiment": sentiment,
                 "sentiment_score": sentiment_score,
                 "customer_intent": intent,
+                "analysis_source": "huggingface",
             }
         except Exception as error:
             print(f"[Warning] Hugging Face inference failed: {error}")
@@ -1472,8 +1476,12 @@ Return JSON format with exact keys:
             parsed_output["sentiment_score"] = hf_analysis.get("sentiment_score", parsed_output.get("sentiment_score", 3))
             parsed_output["customer_intent"] = hf_analysis.get("customer_intent", parsed_output.get("customer_intent", "query"))
             parsed_output["selected_category"] = parsed_output["customer_intent"]
+            if hf_analysis.get("analysis_source"):
+                parsed_output["analysis_source"] = hf_analysis.get("analysis_source")
 
-        if parsed_output.get("analysis_source") == "local fallback (Gemini quota unavailable)":
+        if detected_language != "en":
+            parsed_output["drafted_response"] = customer_response_fallback(detected_language, conversation_state)
+        elif parsed_output.get("analysis_source") == "local fallback (Gemini quota unavailable)":
             parsed_output["drafted_response"] = customer_response_fallback(detected_language, conversation_state)
         elif not parsed_output.get("drafted_response"):
             parsed_output["drafted_response"] = customer_response_fallback(detected_language, conversation_state)

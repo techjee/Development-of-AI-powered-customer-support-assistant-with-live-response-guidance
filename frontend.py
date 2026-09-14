@@ -208,6 +208,28 @@ if current_user["role"] == "admin":
         analytics_response = get_from_backend("/api/admin/analytics", timeout=30)
         if analytics_response.status_code == 200:
             analytics = analytics_response.json()
+
+            st.markdown("### Notifications")
+            for notification in analytics.get("complaint_trends", ["No significant complaint trends detected."]):
+                st.info(notification)
+            try:
+                notification_response = get_from_backend("/api/admin/notifications", timeout=90)
+                if notification_response.status_code == 200:
+                    escalation_notifications = notification_response.json().get("notifications", [])
+                    if escalation_notifications:
+                        for notification in escalation_notifications:
+                            st.warning(
+                                f"{notification.get('message', 'Escalation received.')} "
+                                f"Priority: {notification.get('priority', 'Not available')} | "
+                                f"Reason: {notification.get('reason', 'Not available')}"
+                            )
+                    else:
+                        st.caption("No new unresolved escalation notifications.")
+                else:
+                    st.error(f"Unable to load escalation notifications: {notification_response.text}")
+            except requests.RequestException as error:
+                st.error(f"Unable to reach the escalation notification service: {error}")
+
             metric_1, metric_2, metric_3, metric_4, metric_5 = st.columns(5)
             metric_1.metric("Total Cases", analytics.get("total_cases", 0))
             metric_2.metric("Open Cases", analytics.get("open_cases", 0))
@@ -329,27 +351,6 @@ if current_user["role"] == "admin":
                 file_name="agent_performance.csv",
                 mime="text/csv",
             )
-
-            st.markdown("### Notifications")
-            for notification in analytics.get("complaint_trends", ["No significant complaint trends detected."]):
-                st.info(notification)
-            try:
-                notification_response = get_from_backend("/api/admin/notifications", timeout=90)
-                if notification_response.status_code == 200:
-                    escalation_notifications = notification_response.json().get("notifications", [])
-                    if escalation_notifications:
-                        for notification in escalation_notifications:
-                            st.warning(
-                                f"{notification.get('message', 'Escalation received.')} "
-                                f"Priority: {notification.get('priority', 'Not available')} | "
-                                f"Reason: {notification.get('reason', 'Not available')}"
-                            )
-                    else:
-                        st.caption("No new unresolved escalation notifications.")
-                else:
-                    st.error(f"Unable to load escalation notifications: {notification_response.text}")
-            except requests.RequestException as error:
-                st.error(f"Unable to reach the escalation notification service: {error}")
 
             st.markdown("### Escalation Queue")
             escalation_response = get_from_backend("/api/admin/escalations", timeout=30)
