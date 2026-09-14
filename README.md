@@ -789,6 +789,52 @@ The API documentation can also be accessed through FastAPI when the backend is r
 
 ---
 
+## Application Screenshots
+
+### Login
+
+![Login](screenshots/login.png)
+
+Role-based access for Human Agents and Administrators.
+
+### Human Agent — Priority Queue
+
+![Agent Priority Queue](screenshots/agent_priority_queue.png)
+
+The Priority Queue provides a centralized view of customer cases with priority, priority score, sentiment, escalation risk, urgency, intent, waiting time, status, and department.
+
+### Human Agent — New Case
+
+![Agent New Case](screenshots/agent_newcase.png)
+
+Agents can create and process new customer cases through the support workspace.
+
+### Human Agent — AI Guidance
+
+![Agent Guidance](screenshots/agent_guidance.png)
+
+The AI-powered workspace provides customer analysis, suggested responses, CBR recommendations, policy references, and response coaching to assist the human agent.
+
+### Administrator Dashboard
+
+![Admin Dashboard](screenshots/admin_dashboard.png)
+
+The Administrator Dashboard provides an overview of support operations, including case metrics, department-level analytics, and escalation monitoring.
+
+### Administrator — Escalation Management
+
+![Admin Escalation](screenshots/admin_escalation.png)
+
+Administrators can monitor escalated cases and review the stored case analysis and relevant case information.
+
+### Administrator — Agent Performance
+
+![Admin Agent Performance](screenshots/admin_agent_performance.png)
+
+Agent Performance provides information about cases handled, resolved, escalated, pending cases, and average case resolution time.
+
+---
+
 ## 29. Example End-to-End Workflow
 
 A typical customer-support interaction follows this flow:
