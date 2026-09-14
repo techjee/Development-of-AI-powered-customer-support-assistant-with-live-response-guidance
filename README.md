@@ -501,7 +501,7 @@ Stores important actions and events throughout the case lifecycle.
 ---
 
 
-## 17. Technology Stack
+## 16. Technology Stack
 
 | Component | Technology |
 |---|---|
@@ -521,7 +521,7 @@ Stores important actions and events throughout the case lifecycle.
 
 ---
 
-## 18. Project Structure
+## 17. Project Structure
 
 ```text
 infosys_internship/
@@ -550,7 +550,7 @@ infosys_internship/
 ```
 
 
-## 19. Requirements
+## 18. Requirements
 
 Before running the project, make sure you have:
 
@@ -566,6 +566,55 @@ Clone the repository:
 git clone <YOUR_GITHUB_REPOSITORY_URL>
 cd infosys_internship
 ```
+
+---
+
+##  19. Application Screenshots
+
+### Login
+
+![Login](screenshots/login.png)
+
+Role-based access for Human Agents and Administrators.
+
+### Human Agent — Priority Queue
+
+![Agent Priority Queue](screenshots/agent_priority_queue.png)
+
+The Priority Queue provides a centralized view of customer cases with priority, priority score, sentiment, escalation risk, urgency, intent, waiting time, status, and department.
+
+### Human Agent — New Case
+
+![Agent New Case](screenshots/agent_newcase.png)
+
+Agents can create and process new customer cases through the support workspace.
+
+### Human Agent — AI Guidance
+
+![Agent Guidance](screenshots/agent_guidance.png)
+
+The AI-powered workspace provides customer analysis, suggested responses, CBR recommendations, policy references, and response coaching to assist the human agent.
+
+### Administrator Dashboard
+
+![Admin Dashboard](screenshots/admin_dashboard.png)
+
+The Administrator Dashboard provides an overview of support operations, including case metrics, department-level analytics, and escalation monitoring.
+
+### Administrator — Escalation Management
+
+![Admin Escalation](screenshots/admin_escalation.png)
+
+Administrators can monitor escalated cases and review the stored case analysis and relevant case information, can also see detailed Summary of escalted case .
+
+### Administrator — Agent Performance
+
+![Admin Agent Performance](screenshots/admin_agent_performance.png)
+
+Agent Performance provides information about cases handled, resolved, escalated, pending cases, and average case resolution time.
+
+1. Can Download CSV file of overall agent performance 
+2. Can Download CSV file of individual agent performance 
 
 ---
 
@@ -607,7 +656,7 @@ Then:
 
 ---
 
-## 22. Configure Environment Variables
+## 21. Configure Environment Variables
 
 Create a `.env` file in the project root.
 
@@ -625,7 +674,7 @@ Do **not** commit `.env` to GitHub.
 
 ---
 
-## 23. Database Setup
+## 22. Database Setup
 
 Initialize the database schema:
 
@@ -649,7 +698,7 @@ The database stores:
 
 ---
 
-## 24. Seed Historical CBR Cases
+## 23. Seed Historical CBR Cases
 
 To populate the historical case database used by Case-Based Reasoning:
 
@@ -661,7 +710,7 @@ After seeding, new customer issues can be compared against previously resolved c
 
 ---
 
-## 25. Run the Backend
+## 24. Run the Backend
 
 Start the FastAPI backend:
 
@@ -683,7 +732,7 @@ http://localhost:8001/health
 
 ---
 
-## 26. Run the Frontend
+## 25. Run the Frontend
 
 Open another terminal and run:
 
@@ -703,7 +752,7 @@ Open the displayed address in your browser.
 
 ---
 
-## 27. How to Try the Application
+## 26. How to Try the Application
 
 ### Step 1 — Login
 
@@ -766,7 +815,7 @@ Relevant case activity is persisted in PostgreSQL.
 
 ---
 
-## 28. API Overview
+## 27. API Overview
 
 The FastAPI backend provides REST APIs for:
 
@@ -789,56 +838,10 @@ The API documentation can also be accessed through FastAPI when the backend is r
 
 ---
 
-## Application Screenshots
-
-### Login
-
-![Login](screenshots/login.png)
-
-Role-based access for Human Agents and Administrators.
-
-### Human Agent — Priority Queue
-
-![Agent Priority Queue](screenshots/agent_priority_queue.png)
-
-The Priority Queue provides a centralized view of customer cases with priority, priority score, sentiment, escalation risk, urgency, intent, waiting time, status, and department.
-
-### Human Agent — New Case
-
-![Agent New Case](screenshots/agent_newcase.png)
-
-Agents can create and process new customer cases through the support workspace.
-
-### Human Agent — AI Guidance
-
-![Agent Guidance](screenshots/agent_guidance.png)
-
-The AI-powered workspace provides customer analysis, suggested responses, CBR recommendations, policy references, and response coaching to assist the human agent.
-
-### Administrator Dashboard
-
-![Admin Dashboard](screenshots/admin_dashboard.png)
-
-The Administrator Dashboard provides an overview of support operations, including case metrics, department-level analytics, and escalation monitoring.
-
-### Administrator — Escalation Management
-
-![Admin Escalation](screenshots/admin_escalation.png)
-
-Administrators can monitor escalated cases and review the stored case analysis and relevant case information, can also see detailed Summary of escalted case .
-
-### Administrator — Agent Performance
-
-![Admin Agent Performance](screenshots/admin_agent_performance.png)
-
-Agent Performance provides information about cases handled, resolved, escalated, pending cases, and average case resolution time.
-
-1. Can Download CSV file of overall agent performance 
-2. Can Download CSV file of individual agent performance 
 
 ---
 
-## 29. Example End-to-End Workflow
+## 28. Example End-to-End Workflow
 
 A typical customer-support interaction follows this flow:
 
@@ -886,7 +889,7 @@ Case Context Extraction
 ---
 
 
-## 37. Quick Start
+## 29. Quick Start
 
 For users who want the shortest setup path:
 
@@ -955,7 +958,7 @@ http://localhost:8501
 
 ---
 
-## 38. Author
+## 30. Author
 
 **Jeevitha A M**
 
