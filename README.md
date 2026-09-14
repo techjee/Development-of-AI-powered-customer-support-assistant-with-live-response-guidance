@@ -825,13 +825,16 @@ The Administrator Dashboard provides an overview of support operations, includin
 
 ![Admin Escalation](screenshots/admin_escalation.png)
 
-Administrators can monitor escalated cases and review the stored case analysis and relevant case information.
+Administrators can monitor escalated cases and review the stored case analysis and relevant case information, can also see detailed Summary of escalted case .
 
 ### Administrator — Agent Performance
 
 ![Admin Agent Performance](screenshots/admin_agent_performance.png)
 
 Agent Performance provides information about cases handled, resolved, escalated, pending cases, and average case resolution time.
+
+1. Can Download CSV file of overall agent performance 
+2. Can Download CSV file of individual agent performance 
 
 ---
 
