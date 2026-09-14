@@ -500,52 +500,424 @@ Stores important actions and events throughout the case lifecycle.
 
 ---
 
-## 16. System Architecture
+
+## 17. Technology Stack
+
+| Component | Technology |
+|---|---|
+| Frontend | Streamlit |
+| Backend | FastAPI |
+| Programming Language | Python |
+| NLP | Hugging Face Transformers |
+| LLM | Gemini |
+| Embeddings | SentenceTransformers |
+| Case-Based Reasoning | Vector Similarity Search |
+| Policy Retrieval | Policy RAG |
+| Database | PostgreSQL / Neon |
+| ORM | SQLAlchemy |
+| Authentication | JWT + bcrypt |
+| API | REST |
+| Version Control | Git / GitHub |
+
+---
+
+## 18. Project Structure
 
 ```text
-                    CUSTOMER
-                       │
-                       ▼
-              Customer Message
-                       │
-                       ▼
-              ┌────────────────┐
-              │ Hugging Face   │
-              │   NLP Layer    │
-              └───────┬────────┘
-                      │
-             Sentiment + Intent
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-          ▼                       ▼
-   Historical Cases          Company Policies
-          │                       │
-          ▼                       ▼
-        CBR                    Policy RAG
-          │                       │
-          └───────────┬───────────┘
-                      │
-                      ▼
-                Gemini / LLM
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-          ▼                       ▼
-   Suggested Response       Next Best Action
-          │
-          ▼
-      AI Coaching
-   ┌──────┼──────┐
-   ▼      ▼      ▼
- Tone  Empathy Clarity
-          │
-          ▼
-      HUMAN AGENT
-          │
-     ┌────┼─────┐
-     ▼    ▼     ▼
-   Send Resolve Escalate
-          │
-          ▼
-       PostgreSQL
+infosys_internship/
+│
+├── .vscode/
+│
+├── venv/
+│
+├── .env
+├── .gitignore
+│
+├── ai_cus_backend.py
+├── frontend.py
+├── vector_db.py
+│
+├── create_schema.py
+├── initialize_users.py
+├── seed_cbr_cases.py
+│
+├── run_backend.ps1
+├── run_frontend.ps1
+│
+├── GUIDELINE.md
+├── UPDATES.txt
+└── requirements.txt
+```
+
+
+## 19. Requirements
+
+Before running the project, make sure you have:
+
+- Python 3.10+
+- Git
+- A PostgreSQL / Neon PostgreSQL database
+- A Gemini API key
+- Internet access for required AI/model dependencies
+
+Clone the repository:
+
+```bash
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd infosys_internship
+```
+
+---
+
+## 20. Create Virtual Environment
+
+Create the virtual environment:
+
+```powershell
+python -m venv venv
+```
+
+Activate it:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+If PowerShell activation is restricted, you can directly use:
+
+```powershell
+.\venv\Scripts\python.exe
+```
+
+---
+
+## 21. Install Dependencies
+
+Install the required Python packages:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install --upgrade pip
+```
+
+Then:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+---
+
+## 22. Configure Environment Variables
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+DATABASE_URL=your_neon_postgresql_connection_string
+GEMINI_API_KEY=your_gemini_api_key
+AUTH_SECRET=your_secure_auth_secret
+```
+
+Use your own credentials.
+
+Do **not** commit `.env` to GitHub.
+
+---
+
+## 23. Database Setup
+
+Initialize the database schema:
+
+```powershell
+.\venv\Scripts\python.exe create_schema.py
+```
+
+Initialize application users:
+
+```powershell
+.\venv\Scripts\python.exe initialize_users.py
+```
+
+The database stores:
+
+- Users
+- Customers
+- Cases
+- Messages
+- Case Events
+
+---
+
+## 24. Seed Historical CBR Cases
+
+To populate the historical case database used by Case-Based Reasoning:
+
+```powershell
+.\venv\Scripts\python.exe seed_cbr_cases.py
+```
+
+After seeding, new customer issues can be compared against previously resolved cases.
+
+---
+
+## 25. Run the Backend
+
+Start the FastAPI backend:
+
+```powershell
+.\venv\Scripts\python.exe -m uvicorn ai_cus_backend:app --port 8001
+```
+
+The backend runs on:
+
+```text
+http://localhost:8001
+```
+
+You can check whether the backend is running using:
+
+```text
+http://localhost:8001/health
+```
+
+---
+
+## 26. Run the Frontend
+
+Open another terminal and run:
+
+```powershell
+.\venv\Scripts\python.exe -m streamlit run frontend.py
+```
+
+Streamlit will provide the local application address.
+
+Usually:
+
+```text
+http://localhost:8501
+```
+
+Open the displayed address in your browser.
+
+---
+
+## 27. How to Try the Application
+
+### Step 1 — Login
+
+Log in as either:
+
+- Human Agent
+- Administrator
+
+### Step 2 — Create or Open a Case
+
+Create a new support case or open an existing case.
+
+Example customer message:
+
+> "I cancelled my order three days ago but still haven't received my refund. This is very frustrating."
+
+### Step 3 — Analyze the Customer
+
+The system analyzes the message and determines relevant support signals such as:
+
+- Sentiment
+- Intent
+- Urgency
+- Escalation Risk
+- Department
+- Key Issue
+
+### Step 4 — Review Historical Cases
+
+The CBR system searches previously resolved cases and displays relevant matches.
+
+### Step 5 — Review Policies
+
+Policy RAG retrieves relevant support policies.
+
+### Step 6 — Generate a Response
+
+The AI combines the current case, historical cases, and policy references to generate a suggested response.
+
+### Step 7 — Review Coaching
+
+The agent can review:
+
+- Tone
+- Empathy
+- Clarity
+- Overall Response Score
+- Coaching Tip
+
+### Step 8 — Take Action
+
+The agent can:
+
+- Edit the response
+- Send the response
+- Resolve the case
+- Escalate the case
+
+Relevant case activity is persisted in PostgreSQL.
+
+---
+
+## 28. API Overview
+
+The FastAPI backend provides REST APIs for:
+
+- Authentication
+- Customer case processing
+- Case creation
+- Case retrieval
+- Case history
+- AI analysis
+- CBR recommendations
+- Policy retrieval
+- Suggested response generation
+- Response coaching
+- Case resolution
+- Case escalation
+- Department transfer
+- Administrator analytics
+
+The API documentation can also be accessed through FastAPI when the backend is running.
+
+---
+
+## 29. Example End-to-End Workflow
+
+A typical customer-support interaction follows this flow:
+
+```text
+Customer sends message
+        │
+        ▼
+NLP Analysis
+        │
+        ├── Sentiment
+        └── Intent
+        │
+        ▼
+Case Context Extraction
+        │
+        ├── Key Issue
+        ├── Urgency
+        └── Escalation Risk
+        │
+        ├───────────────┐
+        ▼               ▼
+      CBR           Policy RAG
+        │               │
+        └───────┬───────┘
+                ▼
+          Gemini / LLM
+                │
+                ▼
+        Suggested Response
+                │
+                ▼
+          AI Coaching
+                │
+                ▼
+          Human Agent
+                │
+        ┌───────┼────────┐
+        ▼       ▼        ▼
+       Send   Resolve  Escalate
+                │
+                ▼
+           PostgreSQL
+```
+
+---
+
+
+## 37. Quick Start
+
+For users who want the shortest setup path:
+
+### 1. Clone the repository
+
+```powershell
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd infosys_internship
+```
+
+### 2. Create the virtual environment
+
+```powershell
+python -m venv venv
+```
+
+### 3. Install dependencies
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### 4. Configure `.env`
+
+```env
+DATABASE_URL=your_neon_postgresql_connection_string
+GEMINI_API_KEY=your_gemini_api_key
+AUTH_SECRET=your_secure_auth_secret
+```
+
+### 5. Initialize the database
+
+```powershell
+.\venv\Scripts\python.exe create_schema.py
+```
+
+```powershell
+.\venv\Scripts\python.exe initialize_users.py
+```
+
+### 6. Seed CBR cases
+
+```powershell
+.\venv\Scripts\python.exe seed_cbr_cases.py
+```
+
+### 7. Start the backend
+
+```powershell
+.\venv\Scripts\python.exe -m uvicorn ai_cus_backend:app --port 8001
+```
+
+### 8. Start the frontend
+
+Open another terminal:
+
+```powershell
+.\venv\Scripts\python.exe -m streamlit run frontend.py
+```
+
+### 9. Open the application
+
+```text
+http://localhost:8501
+```
+
+---
+
+## 38. Author
+
+**Jeevitha A M**
+
+CSE — Data Science
+
+Dayananda Sagar University
+
+---
+
+## License
+
+This project is licensed under the **MIT License**.
+
+You may use, modify, and distribute the project in accordance with the terms of the MIT License.
